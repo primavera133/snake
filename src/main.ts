@@ -6,6 +6,7 @@ import { drawSnake } from "./drawSnake";
 import { hasGameEnded } from "./hasGameEnded";
 import { drawFood } from "./drawFood";
 import { state as s } from "./state";
+import { gameOver } from "./gameOver";
 
 document.querySelector<HTMLDivElement>("#app")!.innerHTML = `
   <div>
@@ -21,6 +22,7 @@ setupGame(
 
 function main() {
   if (hasGameEnded()) {
+    gameOver();
     return;
   }
   setTimeout(function onTick() {
