@@ -5,6 +5,7 @@ import { moveSnake } from "./moveSnake";
 import { drawSnake } from "./drawSnake";
 import { hasGameEnded } from "./hasGameEnded";
 import { drawFood } from "./drawFood";
+import { state as s } from "./state";
 
 document.querySelector<HTMLDivElement>("#app")!.innerHTML = `
   <div>
@@ -27,6 +28,7 @@ function main() {
     moveSnake();
     drawSnake();
     drawFood();
+    s.isChangingDirection = false;
     main();
   }, 100);
 }

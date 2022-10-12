@@ -1,6 +1,10 @@
 import { config as c } from "./config";
+import { state as s } from "./state";
 
 export function changeDirection(event: KeyboardEvent) {
+  if (s.isChangingDirection) return;
+  s.isChangingDirection = true; // only one change per cycle
+
   const LEFT_KEY = 37;
   const RIGHT_KEY = 39;
   const UP_KEY = 38;

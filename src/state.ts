@@ -9,6 +9,7 @@ export type GameState = {
   foodX: number | null;
   foodY: number | null;
   score: number;
+  isChangingDirection: boolean;
 };
 
 export const state: GameState = {
@@ -17,4 +18,5 @@ export const state: GameState = {
   foodX: null,
   foodY: null,
   score: 0,
+  isChangingDirection: false,
 };
