@@ -8,7 +8,7 @@ import { drawFood } from "./drawFood";
 
 document.querySelector<HTMLDivElement>("#app")!.innerHTML = `
   <div>
-    <div id="scoreboard"></div>
+    <div class="scoreboard-wrapper"><div id="scoreboard"></div></div>
     <canvas id="gameCanvas" width="400" height="400"><canvas></canvas>
   </div>
 `;
