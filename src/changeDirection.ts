@@ -1,37 +1,49 @@
 import { config as c } from "./config";
 import { state as s } from "./state";
 
+export enum direction {
+  goingDown,
+  goingUp,
+  goingLeft,
+  goingRight,
+}
+
+export function getDirection(): direction {
+  if (c.dy === -10) return direction.goingUp;
+  if (c.dy === 10) return direction.goingDown;
+  if (c.dx === 10) return direction.goingRight;
+  else return direction.goingLeft;
+}
+
 export function changeDirection(event: KeyboardEvent) {
   if (s.isChangingDirection) return;
   s.isChangingDirection = true; // only one change per cycle
 
-  const LEFT_KEY = 37;
-  const RIGHT_KEY = 39;
-  const UP_KEY = 38;
-  const DOWN_KEY = 40;
+  const LEFT_KEY = "ArrowLeft";
+  const RIGHT_KEY = "ArrowRight";
+  const UP_KEY = "ArrowUp";
+  const DOWN_KEY = "ArrowDown";
 
-  const keyPressed = event.keyCode;
-  const goingUp = c.dy === -10;
-  const goingDown = c.dy === 10;
-  const goingRight = c.dx === 10;
-  const goingLeft = c.dx === -10;
+  const keyPressed = event.key;
 
-  if (keyPressed === LEFT_KEY && !goingRight) {
+  const currentDirection = getDirection();
+
+  if (keyPressed === LEFT_KEY && currentDirection != direction.goingRight) {
     c.dx = -10;
     c.dy = 0;
   }
 
-  if (keyPressed === UP_KEY && !goingDown) {
+  if (keyPressed === UP_KEY && currentDirection != direction.goingDown) {
     c.dx = 0;
     c.dy = -10;
   }
 
-  if (keyPressed === RIGHT_KEY && !goingLeft) {
+  if (keyPressed === RIGHT_KEY && currentDirection != direction.goingLeft) {
     c.dx = 10;
     c.dy = 0;
   }
 
-  if (keyPressed === DOWN_KEY && !goingUp) {
+  if (keyPressed === DOWN_KEY && currentDirection != direction.goingUp) {
     c.dx = 0;
     c.dy = 10;
   }

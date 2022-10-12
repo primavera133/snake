@@ -7,6 +7,7 @@ import { hasGameEnded } from "./hasGameEnded";
 import { drawFood } from "./drawFood";
 import { state as s } from "./state";
 import { gameOver } from "./gameOver";
+import { askDriver } from "./driver/askDriver";
 
 document.querySelector<HTMLDivElement>("#app")!.innerHTML = `
   <div>
@@ -30,6 +31,8 @@ function main() {
     moveSnake();
     drawSnake();
     drawFood();
+
+    askDriver();
     s.isChangingDirection = false;
     main();
   }, 100);

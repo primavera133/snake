@@ -2,7 +2,7 @@ import { board as b } from "./config";
 import { state as s } from "./state";
 
 export function drawFood() {
-  if (!s.foodX || !s.foodY) {
+  if (s.foodX == null || s.foodY == null) {
     return;
   }
   b.ctx.fillStyle = "lightgreen";
