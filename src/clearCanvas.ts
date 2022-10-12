@@ -1,22 +1,8 @@
-import { config } from "./config";
+import { config as c, board as b } from "./config";
 
 export function clearCanvas() {
-  if (!config.snakeboard_ctx || !config.snakeboard) {
-    return;
-  }
-
-  config.snakeboard_ctx.fillStyle = config.board_background;
-  config.snakeboard_ctx.strokeStyle = config.board_border;
-  config.snakeboard_ctx.fillRect(
-    0,
-    0,
-    config.snakeboard.width,
-    config.snakeboard.height
-  );
-  config.snakeboard_ctx.strokeRect(
-    0,
-    0,
-    config.snakeboard.width,
-    config.snakeboard.height
-  );
+  b.ctx.fillStyle = c.board_background;
+  b.ctx.strokeStyle = c.board_border;
+  b.ctx.fillRect(0, 0, b.canvas.width, b.canvas.height);
+  b.ctx.strokeRect(0, 0, b.canvas.width, b.canvas.height);
 }

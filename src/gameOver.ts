@@ -1,9 +1,9 @@
-import { config } from "./config";
+import { board as b } from "./config";
 
 export function gameOver() {
-  if (!config.snakeboard_ctx) return;
+  if (!b.ctx) return;
 
-  config.snakeboard_ctx.font = "30px Arial";
-  config.snakeboard_ctx.fillStyle = "red";
-  config.snakeboard_ctx.fillText("Game Over", 130, 180);
+  b.ctx.font = "30px Arial";
+  b.ctx.fillStyle = "red";
+  b.ctx.fillText("Game Over", 130, 180);
 }

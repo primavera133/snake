@@ -11,12 +11,12 @@ import { gameOver } from "./gameOver";
 document.querySelector<HTMLDivElement>("#app")!.innerHTML = `
   <div>
     <div class="scoreboard-wrapper"><div id="scoreboard"></div></div>
-    <canvas id="gameCanvas" width="400" height="400"><canvas></canvas>
+    <canvas id="canvas" width="400" height="400"><canvas></canvas>
   </div>
 `;
 
 setupGame(
-  document.querySelector<HTMLCanvasElement>("#gameCanvas")!,
+  document.querySelector<HTMLCanvasElement>("#canvas")!,
   document.querySelector<HTMLDivElement>("#scoreboard")!
 );
 
