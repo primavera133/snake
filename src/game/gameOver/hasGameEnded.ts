@@ -1,4 +1,4 @@
-import { SnakePart } from "../types";
+import { SnakePart } from "../../types";
 
 export function hasGameEnded(
   snake: SnakePart[],

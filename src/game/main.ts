@@ -2,27 +2,44 @@ import { clearBoard } from "./clearBoard";
 import { drawSnake, getSnakeDrawConfig } from "./drawSnake.ts";
 import { drawGameOver, hasGameEnded } from "./gameOver";
 import { moveSnake } from "./moveSnake";
-import { BoardState, GameState, SnakePart, SnakeState } from "./types";
+import {
+  BoardConfig,
+  DirectionInput,
+  GameState,
+  SnakePart,
+  SnakeState,
+} from "../types";
+import React from "react";
+import { changeDirection } from "./moveSnake/changeDirection";
 
-export const startGame = (ctx: CanvasRenderingContext2D) => {
+export const startGame = (
+  ctx: CanvasRenderingContext2D,
+  boardConfig: BoardConfig,
+  gameState: GameState
+) => {
   const gameTickSpeed = 100;
 
-  let gameState: GameState = {
-    gameOver: false,
+  const handleKeyPress = (msg: string, code: DirectionInput) => {
+    const newDirection = changeDirection(code, {
+      dx: snakeState.dx,
+      dy: snakeState.dy,
+    });
+    if (newDirection) {
+      updateSnakeState({
+        ...snakeState,
+        dx: newDirection.dx,
+        dy: newDirection.dy,
+      });
+    }
   };
+
+  PubSub.subscribe("KEYPRESS", handleKeyPress);
 
   function updateSnakeState(newSnakeState: SnakeState): void {
     snakeState = {
       ...newSnakeState,
     };
   }
-
-  let boardState: BoardState = {
-    width: 400,
-    height: 400,
-    boardBorder: "black",
-    boardBackground: "white",
-  };
 
   let snakeState: SnakeState = {
     snake: [
@@ -35,10 +52,6 @@ export const startGame = (ctx: CanvasRenderingContext2D) => {
     dx: 10,
     dy: 0,
   };
-
-  function updateGameState(newGameState: GameState): void {
-    gameState = { ...newGameState };
-  }
 
   function main() {
     setTimeout(function onTick() {
@@ -61,10 +74,10 @@ export const startGame = (ctx: CanvasRenderingContext2D) => {
 
       const gameOver = hasGameEnded(
         snakeState.snake,
-        boardState.width,
-        boardState.height
+        boardConfig.width,
+        boardConfig.height
       );
-      updateGameState({
+      PubSub.publish("GAMESTATE", {
         ...gameState,
         gameOver,
       });
@@ -75,10 +88,10 @@ export const startGame = (ctx: CanvasRenderingContext2D) => {
       if (!gameOver) {
         clearBoard(
           ctx,
-          boardState.width,
-          boardState.height,
-          boardState.boardBackground,
-          boardState.boardBorder
+          boardConfig.width,
+          boardConfig.height,
+          boardConfig.boardBackground,
+          boardConfig.boardBorder
         );
 
         drawSnake(getSnakeDrawConfig(snakeState.snake), ctx);

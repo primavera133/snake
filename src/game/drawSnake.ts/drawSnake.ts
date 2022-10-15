@@ -1,4 +1,4 @@
-import { SnakePart, snakePartDrawConfig } from "../types";
+import { SnakePart, snakePartDrawConfig } from "../../types";
 import { drawSnakePart } from "./drawSnakePart";
 
 export const drawSnake = (

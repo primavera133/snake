@@ -1,4 +1,4 @@
-import { SnakePart } from "../types";
+import { SnakePart } from "../../types";
 import { moveSnake } from "./moveSnake";
 
 describe("moveSnake", () => {

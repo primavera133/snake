@@ -10,7 +10,9 @@
     "test": "NODE_ENV=test jest"
   },
   "dependencies": {
+    "@types/pubsub-js": "^1.8.3",
     "camelcase": "^6.3.0",
+    "pubsub-js": "^1.9.4",
     "react": "^17.0.2",
     "react-dom": "^17.0.2"
   },

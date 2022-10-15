@@ -16,7 +16,7 @@ export type GameState = {
   gameOver: boolean;
 };
 
-export type BoardState = {
+export type BoardConfig = {
   width: number;
   height: number;
   boardBackground: string;
@@ -25,6 +25,18 @@ export type BoardState = {
 
 export type SnakeState = {
   snake: SnakePart[];
+  dx: number;
+  dy: number;
+};
+
+export enum DirectionInput {
+  up = "UP",
+  down = "DOWN",
+  left = "LEFT",
+  right = "RIGHT",
+}
+
+export type Direction = {
   dx: number;
   dy: number;
 };
