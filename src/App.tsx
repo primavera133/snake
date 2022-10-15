@@ -46,9 +46,13 @@ export function App () {
   }
 
   useKeyPress(() => _handleKeyPress(DirectionInput.right), ['ArrowRight'])
+  useKeyPress(() => _handleKeyPress(DirectionInput.right), ['KeyD'])
   useKeyPress(() => _handleKeyPress(DirectionInput.left), ['ArrowLeft'])
+  useKeyPress(() => _handleKeyPress(DirectionInput.left), ['KeyA'])
   useKeyPress(() => _handleKeyPress(DirectionInput.up), ['ArrowUp'])
+  useKeyPress(() => _handleKeyPress(DirectionInput.up), ['KeyW'])
   useKeyPress(() => _handleKeyPress(DirectionInput.down), ['ArrowDown'])
+  useKeyPress(() => _handleKeyPress(DirectionInput.down), ['KeyS'])
 
   PubSub.subscribe('GAMESTATE', (msg, newGameState) =>
     setGameState(newGameState)
