@@ -1,13 +1,16 @@
 import { pubSubEvents } from "../config";
+import { randomizer } from "../helpers";
 import {
   BoardConfig,
   DirectionInput,
   GameState,
   SnakePart,
-  SnakeState,
+  State,
 } from "../types";
 import { clearBoard } from "./clearBoard";
 import { drawSnake, getSnakeDrawConfig } from "./drawSnake.ts";
+import { didSnakeEatFood, drawFood } from "./food";
+import { generateFood } from "./food/generateFood";
 import { drawGameOver, hasGameEnded } from "./gameOver";
 import { moveSnake } from "./moveSnake";
 import { changeDirection } from "./moveSnake/changeDirection";
@@ -23,12 +26,12 @@ export const startGame = (
     pubSubEvents.KEYPRESS,
     (msg: string, code: DirectionInput) => {
       const newDirection = changeDirection(code, {
-        dx: snakeState.dx,
-        dy: snakeState.dy,
+        dx: state.dx,
+        dy: state.dy,
       });
       if (newDirection) {
-        updateSnakeState({
-          ...snakeState,
+        updateState({
+          ...state,
           dx: newDirection.dx,
           dy: newDirection.dy,
         });
@@ -36,7 +39,7 @@ export const startGame = (
     }
   );
 
-  let snakeState: SnakeState = {
+  let state: State = {
     snake: [
       { x: 200, y: 200 },
       { x: 190, y: 200 },
@@ -46,11 +49,13 @@ export const startGame = (
     ],
     dx: 10,
     dy: 0,
+    foodX: randomizer(0, boardConfig.width - 10),
+    foodY: randomizer(0, boardConfig.height - 10),
   };
 
-  function updateSnakeState(newSnakeState: SnakeState): void {
-    snakeState = {
-      ...newSnakeState,
+  function updateState(newState: State): void {
+    state = {
+      ...newState,
     };
   }
 
@@ -59,29 +64,47 @@ export const startGame = (
       /**
        *  calculate new state
        */
-      const hasEatenFood = false;
+      const hasEatenFood = didSnakeEatFood(
+        state.snake,
+        state.foodX,
+        state.foodY
+      );
 
       const movedSnake: SnakePart[] = moveSnake(
-        snakeState.snake,
-        snakeState.dx,
-        snakeState.dy,
+        state.snake,
+        state.dx,
+        state.dy,
         hasEatenFood
       );
 
-      updateSnakeState({
-        ...snakeState,
+      if (hasEatenFood) {
+        // updateScore()
+        do {
+          const newFood = generateFood(boardConfig.width, boardConfig.height);
+          updateState({
+            ...state,
+            foodX: newFood.foodX,
+            foodY: newFood.foodY,
+          });
+        } while (didSnakeEatFood(state.snake, state.foodX, state.foodY));
+      }
+
+      updateState({
+        ...state,
         snake: movedSnake,
       });
 
       const gameOver = hasGameEnded(
-        snakeState.snake,
+        state.snake,
         boardConfig.width,
         boardConfig.height
       );
-      PubSub.publish(pubSubEvents.GAMESTATE, {
-        ...gameState,
-        gameOver,
-      });
+      if (gameOver) {
+        PubSub.publish(pubSubEvents.GAMESTATE, {
+          ...gameState,
+          gameOver,
+        });
+      }
 
       /**
        * render
@@ -95,8 +118,8 @@ export const startGame = (
           boardConfig.boardBorder
         );
 
-        drawSnake(getSnakeDrawConfig(snakeState.snake), ctx);
-        // drawFood();
+        drawSnake(getSnakeDrawConfig(state.snake), ctx);
+        drawFood(ctx, state.foodX, state.foodY);
       }
 
       if (gameOver) {

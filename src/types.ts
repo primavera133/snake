@@ -23,10 +23,12 @@ export type BoardConfig = {
   boardBorder: string;
 };
 
-export type SnakeState = {
+export type State = {
   snake: SnakePart[];
   dx: number;
   dy: number;
+  foodX: number | null;
+  foodY: number | null;
 };
 
 export enum DirectionInput {

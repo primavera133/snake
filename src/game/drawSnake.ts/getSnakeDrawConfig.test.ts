@@ -2,7 +2,7 @@ import { SnakePart, snakePartDrawConfig } from "../../types";
 import { getSnakeDrawConfig } from "./getSnakeDrawConfig";
 
 describe("moveSnake", () => {
-  it("should return config from snakeState ", () => {
+  it("should return config from snake state ", () => {
     const snake: SnakePart[] = [
       { x: 200, y: 200 },
       { x: 190, y: 200 },
