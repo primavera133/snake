@@ -6,6 +6,7 @@ import { startGame } from './game/main'
 import { useKeyPress } from './hooks/useKeyPress'
 import { BoardConfig, DirectionInput, GameState, SnakeState } from './types'
 import PubSub from 'pubsub-js'
+import { pubSubEvents } from './config'
 
 const initialGameState = {
   gameOver: false
@@ -42,7 +43,7 @@ export function App () {
 
   function _handleKeyPress (code: DirectionInput) {
     setKeyPressed(code)
-    PubSub.publish('KEYPRESS', code)
+    PubSub.publish(pubSubEvents.KEYPRESS, code)
   }
 
   useKeyPress(() => _handleKeyPress(DirectionInput.right), ['ArrowRight'])
@@ -54,7 +55,7 @@ export function App () {
   useKeyPress(() => _handleKeyPress(DirectionInput.down), ['ArrowDown'])
   useKeyPress(() => _handleKeyPress(DirectionInput.down), ['KeyS'])
 
-  PubSub.subscribe('GAMESTATE', (msg, newGameState) =>
+  PubSub.subscribe(pubSubEvents.GAMESTATE, (msg, newGameState) =>
     setGameState(newGameState)
   )
 

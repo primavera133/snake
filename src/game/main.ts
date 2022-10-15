@@ -11,6 +11,7 @@ import {
 } from "../types";
 import React from "react";
 import { changeDirection } from "./moveSnake/changeDirection";
+import { pubSubEvents } from "../config";
 
 export const startGame = (
   ctx: CanvasRenderingContext2D,
@@ -19,27 +20,22 @@ export const startGame = (
 ) => {
   const gameTickSpeed = 100;
 
-  const handleKeyPress = (msg: string, code: DirectionInput) => {
-    const newDirection = changeDirection(code, {
-      dx: snakeState.dx,
-      dy: snakeState.dy,
-    });
-    if (newDirection) {
-      updateSnakeState({
-        ...snakeState,
-        dx: newDirection.dx,
-        dy: newDirection.dy,
+  PubSub.subscribe(
+    pubSubEvents.KEYPRESS,
+    (msg: string, code: DirectionInput) => {
+      const newDirection = changeDirection(code, {
+        dx: snakeState.dx,
+        dy: snakeState.dy,
       });
+      if (newDirection) {
+        updateSnakeState({
+          ...snakeState,
+          dx: newDirection.dx,
+          dy: newDirection.dy,
+        });
+      }
     }
-  };
-
-  PubSub.subscribe("KEYPRESS", handleKeyPress);
-
-  function updateSnakeState(newSnakeState: SnakeState): void {
-    snakeState = {
-      ...newSnakeState,
-    };
-  }
+  );
 
   let snakeState: SnakeState = {
     snake: [
@@ -52,6 +48,12 @@ export const startGame = (
     dx: 10,
     dy: 0,
   };
+
+  function updateSnakeState(newSnakeState: SnakeState): void {
+    snakeState = {
+      ...newSnakeState,
+    };
+  }
 
   function main() {
     setTimeout(function onTick() {
@@ -77,7 +79,7 @@ export const startGame = (
         boardConfig.width,
         boardConfig.height
       );
-      PubSub.publish("GAMESTATE", {
+      PubSub.publish(pubSubEvents.GAMESTATE, {
         ...gameState,
         gameOver,
       });
