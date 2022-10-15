@@ -1,0 +1,1 @@
+export { clearBoard } from "./clearBoard";
