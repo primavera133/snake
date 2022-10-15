@@ -1,4 +1,4 @@
-import React, { useRef, useEffect } from 'react'
+import React from 'react'
 
 interface CanvasProps {
   width: number
@@ -20,5 +20,5 @@ export const Canvas = ({ width, height, canvasRef }: CanvasProps) => {
   //     }
   //   }, [])
 
-  return <canvas ref={canvasRef} height={height} width={width} />
+  return <canvas ref={canvasRef} height={height} width={width} role='img' />
 }

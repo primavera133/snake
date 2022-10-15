@@ -63,12 +63,12 @@ export function App () {
   useKeyPress(() => _handleKeyPress(DirectionInput.down), ['KeyS'])
 
   return (
-    <div>
-      <div className='scoreboard-wrapper'>
-        Score:<div id='scoreboard'>{gameState.score}</div>
+    <div id='snakeboard'>
+      <div className='scoreboard'>
+        <div>Score: {gameState.score}</div>
       </div>
       <Canvas width={400} height={400} canvasRef={canvasRef} />
-      <div>{keyPressed}</div>
+      <div data-testid='keyPressed'>{keyPressed}</div>
     </div>
   )
 }
