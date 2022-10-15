@@ -1,3 +1,4 @@
+import PubSub from "pubsub-js";
 import { pubSubEvents } from "../config";
 import { randomizer } from "../helpers";
 import {
@@ -14,6 +15,7 @@ import { generateFood } from "./food/generateFood";
 import { drawGameOver, hasGameEnded } from "./gameOver";
 import { moveSnake } from "./moveSnake";
 import { changeDirection } from "./moveSnake/changeDirection";
+import { updateScore } from "./score/updateScore";
 
 export const startGame = (
   ctx: CanvasRenderingContext2D,
@@ -51,6 +53,7 @@ export const startGame = (
     dy: 0,
     foodX: randomizer(0, boardConfig.width - 10),
     foodY: randomizer(0, boardConfig.height - 10),
+    score: 0,
   };
 
   function updateState(newState: State): void {
@@ -78,13 +81,14 @@ export const startGame = (
       );
 
       if (hasEatenFood) {
-        // updateScore()
+        const newScore = updateScore(state.score);
         do {
           const newFood = generateFood(boardConfig.width, boardConfig.height);
           updateState({
             ...state,
             foodX: newFood.foodX,
             foodY: newFood.foodY,
+            score: newScore,
           });
         } while (didSnakeEatFood(state.snake, state.foodX, state.foodY));
       }

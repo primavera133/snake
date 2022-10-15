@@ -8,7 +8,8 @@ import { useKeyPress } from './hooks/useKeyPress'
 import { BoardConfig, DirectionInput, GameState } from './types'
 
 const initialGameState = {
-  gameOver: false
+  gameOver: false,
+  score: 0
 }
 
 const boardConfig: BoardConfig = {
@@ -29,6 +30,13 @@ export function App () {
       const context = canvas.getContext('2d')
 
       if (context) {
+        PubSub.subscribe(pubSubEvents.GAMESTATE, (msg, newGameState) =>
+          setGameState(newGameState)
+        )
+        PubSub.subscribe(pubSubEvents.SCORE, (msg, newScore) =>
+          setGameState({ ...gameState, score: newScore })
+        )
+
         startGame(context, boardConfig, gameState)
       }
     }
@@ -54,14 +62,10 @@ export function App () {
   useKeyPress(() => _handleKeyPress(DirectionInput.down), ['ArrowDown'])
   useKeyPress(() => _handleKeyPress(DirectionInput.down), ['KeyS'])
 
-  PubSub.subscribe(pubSubEvents.GAMESTATE, (msg, newGameState) =>
-    setGameState(newGameState)
-  )
-
   return (
     <div>
       <div className='scoreboard-wrapper'>
-        Score:<div id='scoreboard'></div>
+        Score:<div id='scoreboard'>{gameState.score}</div>
       </div>
       <Canvas width={400} height={400} canvasRef={canvasRef} />
       <div>{keyPressed}</div>

@@ -14,6 +14,7 @@ export type snakePartDrawConfig = {
 
 export type GameState = {
   gameOver: boolean;
+  score: number;
 };
 
 export type BoardConfig = {
@@ -29,6 +30,7 @@ export type State = {
   dy: number;
   foodX: number | null;
   foodY: number | null;
+  score: number;
 };
 
 export enum DirectionInput {
