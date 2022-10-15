@@ -2,10 +2,20 @@ import { clearBoard } from "./clearBoard";
 import { drawSnake, getSnakeDrawConfig } from "./drawSnake.ts";
 import { drawGameOver, hasGameEnded } from "./gameOver";
 import { moveSnake } from "./moveSnake";
-import { BoardState, SnakePart, SnakeState } from "./types";
+import { BoardState, GameState, SnakePart, SnakeState } from "./types";
 
 export const startGame = (ctx: CanvasRenderingContext2D) => {
   const gameTickSpeed = 100;
+
+  let gameState: GameState = {
+    gameOver: false,
+  };
+
+  function updateSnakeState(newSnakeState: SnakeState): void {
+    snakeState = {
+      ...newSnakeState,
+    };
+  }
 
   let boardState: BoardState = {
     width: 400,
@@ -26,20 +36,15 @@ export const startGame = (ctx: CanvasRenderingContext2D) => {
     dy: 0,
   };
 
-  function updateSnakeState(newSnakeState: SnakeState): void {
-    snakeState = {
-      ...newSnakeState,
-    };
+  function updateGameState(newGameState: GameState): void {
+    gameState = { ...newGameState };
   }
 
   function main() {
-    //   if (hasGameEnded()) {
-    //     gameOver();
-    //     return;
-    //   }
-
     setTimeout(function onTick() {
-      // calculate new state
+      /**
+       *  calculate new state
+       */
       const hasEatenFood = false;
 
       const movedSnake: SnakePart[] = moveSnake(
@@ -59,8 +64,14 @@ export const startGame = (ctx: CanvasRenderingContext2D) => {
         boardState.width,
         boardState.height
       );
+      updateGameState({
+        ...gameState,
+        gameOver,
+      });
 
-      // render
+      /**
+       * render
+       */
       if (!gameOver) {
         clearBoard(
           ctx,
@@ -81,7 +92,9 @@ export const startGame = (ctx: CanvasRenderingContext2D) => {
       // reset cycle
       // s.isChangingDirection = false;
 
-      // repeat
+      /**
+       * repeat
+       */
       if (!gameOver) {
         main();
       }

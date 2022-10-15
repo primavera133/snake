@@ -12,6 +12,10 @@ export type snakePartDrawConfig = {
   heigh: number;
 };
 
+export type GameState = {
+  gameOver: boolean;
+};
+
 export type BoardState = {
   width: number;
   height: number;
