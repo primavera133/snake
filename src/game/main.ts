@@ -15,7 +15,7 @@ import { generateFood } from "./food/generateFood";
 import { drawGameOver, hasGameEnded } from "./gameOver";
 import { moveSnake } from "./moveSnake";
 import { changeDirection } from "./moveSnake/changeDirection";
-import { updateScore } from "./score/updateScore";
+import { updateScore } from "./score";
 
 export const startGame = (
   ctx: CanvasRenderingContext2D,
