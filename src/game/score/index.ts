@@ -1,0 +1,1 @@
+export { updateScore } from "./updateScore";
