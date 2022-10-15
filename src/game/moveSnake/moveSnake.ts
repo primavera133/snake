@@ -1,4 +1,4 @@
-import { SnakePart, snakePartDrawConfig } from "../../types";
+import { SnakePart } from "../../types";
 
 function getMovedSnake(
   snake: SnakePart[],

@@ -1,7 +1,4 @@
-import { clearBoard } from "./clearBoard";
-import { drawSnake, getSnakeDrawConfig } from "./drawSnake.ts";
-import { drawGameOver, hasGameEnded } from "./gameOver";
-import { moveSnake } from "./moveSnake";
+import { pubSubEvents } from "../config";
 import {
   BoardConfig,
   DirectionInput,
@@ -9,9 +6,11 @@ import {
   SnakePart,
   SnakeState,
 } from "../types";
-import React from "react";
+import { clearBoard } from "./clearBoard";
+import { drawSnake, getSnakeDrawConfig } from "./drawSnake.ts";
+import { drawGameOver, hasGameEnded } from "./gameOver";
+import { moveSnake } from "./moveSnake";
 import { changeDirection } from "./moveSnake/changeDirection";
-import { pubSubEvents } from "../config";
 
 export const startGame = (
   ctx: CanvasRenderingContext2D,

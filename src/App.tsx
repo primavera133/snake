@@ -1,12 +1,11 @@
-import { useRef, useEffect, useState } from 'react'
-import logo from './logo.svg'
+import PubSub from 'pubsub-js'
+import { useEffect, useRef, useState } from 'react'
 import './App.css'
 import { Canvas } from './components/Canvas/Canvas'
+import { pubSubEvents } from './config'
 import { startGame } from './game/main'
 import { useKeyPress } from './hooks/useKeyPress'
-import { BoardConfig, DirectionInput, GameState, SnakeState } from './types'
-import PubSub from 'pubsub-js'
-import { pubSubEvents } from './config'
+import { BoardConfig, DirectionInput, GameState } from './types'
 
 const initialGameState = {
   gameOver: false
