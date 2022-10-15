@@ -1,10 +1,10 @@
 import { useRef, useEffect } from 'react'
 import logo from './logo.svg'
 import './App.css'
-import { Canvas } from './modules/Canvas/Canvas'
+import { Canvas } from './components/Canvas/Canvas'
 import { startGame } from './game/main'
 
-function App () {
+export function App () {
   const canvasRef = useRef<HTMLCanvasElement>(null)
 
   useEffect(() => {
@@ -26,5 +26,3 @@ function App () {
     </div>
   )
 }
-
-export default App
