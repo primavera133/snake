@@ -1,7 +1,8 @@
 import PubSub from 'pubsub-js'
 import { useEffect, useRef, useState } from 'react'
 import './App.css'
-import { Canvas } from './components/Canvas/Canvas'
+import { Canvas } from './components/Canvas'
+import { Restart } from './components/Restart'
 import { pubSubEvents } from './config'
 import { startGame } from './game/main'
 import { useKeyPress } from './hooks/useKeyPress'
@@ -69,6 +70,7 @@ export function App () {
       </div>
       <Canvas width={400} height={400} canvasRef={canvasRef} />
       <div data-testid='keyPressed'>{keyPressed}</div>
+      {gameState.gameOver && <Restart />}
     </div>
   )
 }

@@ -12,7 +12,7 @@ import { clearBoard } from "./clearBoard";
 import { drawSnake, getSnakeDrawConfig } from "./drawSnake.ts";
 import { didSnakeEatFood, drawFood } from "./food";
 import { generateFood } from "./food/generateFood";
-import { drawGameOver, hasGameEnded } from "./gameOver";
+import { drawGameOver, getResetState, hasGameEnded } from "./gameOver";
 import { moveSnake } from "./moveSnake";
 import { changeDirection } from "./moveSnake/changeDirection";
 import { updateScore } from "./score";
@@ -40,6 +40,15 @@ export const startGame = (
       }
     }
   );
+
+  PubSub.subscribe(pubSubEvents.RESETGAME, (msg: string, value: boolean) => {
+    updateState(getResetState(boardConfig.width, boardConfig.height));
+    main();
+    PubSub.publish(pubSubEvents.GAMESTATE, {
+      ...gameState,
+      gameOver: false,
+    });
+  });
 
   let state: State = {
     snake: [
